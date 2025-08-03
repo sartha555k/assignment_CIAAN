@@ -1,23 +1,31 @@
 require('dotenv').config();
 const express = require("express");
-require('dotenv').config();
 const connectDB = require("./config/database");
 const app = express();
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
+const cors = require("cors");
 const http = require("http");
-const User = require('./models/user');
+
+
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(express.json());
+app.use(cookieParser());
+
+const authRouter = require("./routes/auth");
+const profileRouter = require("./routes/profile");
+const requestRouter = require("./routes/request");
+const userRouter = require("./routes/user");
+
+
+
+app.use("/", authRouter);
+app.use("/", profileRouter);
+app.use("/", requestRouter);
+app.use("/", userRouter);
+
+
 const server = http.createServer(app);
-
-app.post("/signup", async(req, res) => {
-    const user = new User({
-        firstName:"Sarthak Testing",
-        password : "Sarthak@123",
-        emailID:"sarthak3@gmail.com"
-    });
-    await user.save();
-    res.send("User created successfully: " + user.firstName);
-})
-
-
 
 
 connectDB()
