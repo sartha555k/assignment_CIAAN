@@ -8,7 +8,7 @@ const cors = require("cors");
 const http = require("http");
 
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "https://assignment-ciaan.vercel.app/", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
